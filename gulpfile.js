@@ -1,18 +1,9 @@
 var gulp = require("gulp");
 var sass = require('gulp-sass');
 var htmlmin = require('gulp-htmlmin');
-var del = require("del");
 
-gulp.task('limparcss',function(){
-	del(".dist/css/*.css");
-});
-
-gulp.task('limparhtml',function(){
-	del(".dist/*.html");
-});
-
-/*Gera o css a partir do sass*/
-gulp.task('geracss', ['limparcss'], function() {
+/*Gera o css compactado a partir do sass*/
+gulp.task('geracss', function() {
     gulp.src('./source/scss/*.scss')
         .pipe(sass({outputStyle:'compressed'}).on('error', sass.logError))
         .pipe(gulp.dest('./dist/css'));
@@ -20,7 +11,7 @@ gulp.task('geracss', ['limparcss'], function() {
 
 
 /*Compacta o html e manda para dist*/
-gulp.task('htmlmin',  ['limparhtml'], function() {
+gulp.task('htmlmin', function() {
   return gulp.src('./source/*.html')
     .pipe(htmlmin({collapseWhitespace: true}))
     .pipe(gulp.dest('./dist/'));
